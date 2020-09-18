@@ -5,7 +5,7 @@ import Home from 'Routes/Home';
 import Tv from 'Routes/Tv';
 import Search from 'Routes/Search';
 import Detail from 'Routes/Detail';
-
+import Test from 'Routes/Test';
 
 export default () => (
     <Router>
@@ -17,6 +17,7 @@ export default () => (
             <Route path='/search' exact component={Search} />
             <Route path='/movie/:id' exact component={Detail} />
             <Route path='/show/:id' exact component={Detail} />
+            <Route path='/test' exact component={Test} />
             <Redirect from='*' to='/'/>
         </Switch>
     </Router>

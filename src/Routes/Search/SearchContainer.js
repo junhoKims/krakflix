@@ -1,17 +1,23 @@
 import React from 'react';
-import SearchPresneter from './SearchPresneter';
+import SearchPresenter from './SearchPresenter';
 import { moviesApi, tvApi } from '../../apis'
 
 export default class extends React.Component {
     state = {
-        movieResult: null,
-        tvResult: null,
+        movieResults: null,
+        tvResults: null,
         searchTerm: '',
         error: null,
         loading: false
     }
 
-    handleSubmit = () => {
+    updateTerm = event => {
+        const { target: { value }} = event;
+        this.setState({ searchTerm: value });
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
         const { searchTerm } = this.state;
         if (searchTerm !== ''){
             this.searchByTerm();
@@ -22,10 +28,9 @@ export default class extends React.Component {
         const { searchTerm } = this.state;
         try {
             this.setState({ loading: true });
-
-            const movieResult = await moviesApi.search(searchTerm);
-            const tvResult = await tvApi.search(searchTerm);
-            this.setState({ movieResult, tvResult });
+            const { data: { results: movieResults }} = await moviesApi.search(searchTerm);
+            const { data: { results: tvResults }} = await tvApi.search(searchTerm);
+            this.setState({ movieResults, tvResults });
         } catch {
             this.setState({ error: 'Can\'t find movies info' });
         } finally {
@@ -34,15 +39,17 @@ export default class extends React.Component {
     }
 
     render() {
-        const { movieResult, tvResult, searchTerm, error, loading } = this.state;
+        const { movieResults, tvResults, searchTerm, error, loading } = this.state;
         return (
-            <SearchPresneter 
-                movieResult={movieResult}
-                tvResult={tvResult}
+            <SearchPresenter 
+                movieResults={movieResults}
+                tvResults={tvResults}
                 searchTerm={searchTerm}
                 error={error}
                 loading={loading}
-                handleSubmit={() => this.handleSubmit}
+                handleSubmit={this.handleSubmit}
+                updateTerm={this.updateTerm}
+                
             /> 
         )
     }

@@ -17,10 +17,10 @@ export const moviesApi = {
             append_to_response: 'videos'
         }
     }),
-    search: term => api.get('search/movie', {
-        params: {
-            query: encodeURIComponent(term)
-        }
+    search: term => api.get("search/movie", {
+      params: {
+        query: encodeURIComponent(term)
+      }
     })
 }
 
@@ -38,6 +38,10 @@ export const tvApi = {
         query: encodeURIComponent(term)
       }
     })
+}
+
+export const testApi = {
+  getPosts: () => axios.get('https://jsonplaceholder.typicode.com/posts')
 }
 
 export default api;
