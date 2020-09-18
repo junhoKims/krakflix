@@ -7,7 +7,8 @@ function Test() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [curPage, setCurPage] = useState(1);
-    const [postPerPage, sestPostPerPage] = useState(10);
+    // const [postPerPage, sestPostPerPage] = useState(10);
+    const postPerPage = 10;
 
     useEffect(() => {
         const fetchPosts = async () => {

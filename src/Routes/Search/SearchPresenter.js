@@ -36,14 +36,14 @@ const SearchPresenter = ({
                 {movieResults && movieResults.length > 0 && (
                     <Section title='Movie Results'>
                         {movieResults.map(movie =>  (
-                            <span key={movie.key}>{movie.title}</span>
+                            <span key={movie.id}>{movie.title}</span>
                         ))}
                     </Section>
                 )}
                 {tvResults && tvResults.length > 0 && (
                     <Section title='Tv Results'>
                         {tvResults.map(show =>  (
-                            <span key={show.key}>{show.name}</span>
+                            <span key={show.id}>{show.name}</span>
                         ))}
                     </Section>
                 )}
