@@ -1,5 +1,5 @@
 import React from 'react';
-import HomePresneter from './HomePresneter';
+import HomePresenter from './HomePresenter';
 import { moviesApi } from '../../apis';
 
 export default class extends React.Component {
@@ -33,7 +33,7 @@ export default class extends React.Component {
     render() {
         const { nowPlaying, upcoming, popular, error, loading } = this.state;
         return (
-            <HomePresneter 
+            <HomePresenter 
                 nowPlaying={nowPlaying}
                 upcoming={upcoming}
                 popular={popular}

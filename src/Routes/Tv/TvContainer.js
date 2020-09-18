@@ -1,5 +1,5 @@
 import React from 'react';
-import TvPresneter from './TvPresneter';
+import TvPresenter from './TvPresenter';
 import { tvApi } from '../../apis'
 
 export default class extends React.Component {
@@ -33,7 +33,7 @@ export default class extends React.Component {
     render() {
         const { topRated, popular, airingToday, error, loading } = this.state;
         return (
-            <TvPresneter 
+            <TvPresenter 
                 topRated={topRated}
                 popular={popular}
                 airingToday={airingToday}
