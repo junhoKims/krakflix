@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Loader from 'Components/Loader';
 import Section from 'Components/Section';
+import Message from 'Components/Message';
 
 const Container = styled.div`
     padding: 0px 20px;
@@ -46,6 +47,10 @@ const SearchPresenter = ({
                             <span key={show.id}>{show.name}</span>
                         ))}
                     </Section>
+                )}
+                {error && <Message text={error} color='#EA2027' />}
+                {movieResults && tvResults && movieResults.length === 0 && tvResults.length === 0 && (
+                    <Message text={`Noting Found for '${searchTerm}'`} color={'#95afc0'} />
                 )}
             </>
         )}
