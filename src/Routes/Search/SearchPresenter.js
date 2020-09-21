@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Helmet from 'react-helmet';
 import Loader from 'Components/Loader';
 import Section from 'Components/Section';
 import Message from 'Components/Message';
@@ -30,6 +31,7 @@ const SearchPresenter = ({
     updateTerm
 }) => (
     <Container>
+        <Helmet><title>Search | Krakflix</title></Helmet>
         <Form onSubmit={handleSubmit}>
             <Input placeholder='Search Movies Or Tv Show' value={searchTerm} onChange={updateTerm} />
         </Form>

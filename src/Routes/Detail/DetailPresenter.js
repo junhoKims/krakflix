@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Helmet from 'react-helmet';
 import Loader from 'Components/Loader';
+import Message from 'Components/Message';
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -47,7 +49,6 @@ const Data = styled.div`
 
 const Title = styled.div`
     margin-bottom: 20px;
-
 `;
 
 const ItemContainer = styled.div`
@@ -68,39 +69,51 @@ const OverView = styled.p`
     width: 50%;
 `;
 
+const MessageContainer = styled.div`
+    margin-top: 30px;
+`;
 
 const DetailPresenter = ({ result, error, loading }) => (
-    loading ? <Loader /> : (
-        <Container>
-            <Backdrop bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`} />
-            <Content>
-                <Cover bgImage={result.poster_path ? `https://image.tmdb.org/t/p/w500${result.poster_path}` : require('Assets/noPosterSmall.png')} />
-                <Data>
-                    <Title>{result.original_title ? result.original_title : result.original_name }</Title>
-                    <ItemContainer>
-                        <Item>{result.release_date 
-                            ? result.release_date.substring(0,4)
-                            : result.first_air_date.substring(0,4)}</Item>
-                        <Divider>·</Divider>
-                        <Item>{result.runtime 
-                            ? `${result.runtime} min`
-                            : `${result.episode_run_time[0]} min`}</Item>
-                        <Divider>·</Divider>
-                        <Item>{result.genres && (
-                            result.genres.map((genre, index) => 
-                                index === result.genres.length - 1 
-                                    ? genre.name 
-                                    : `${genre.name} / `
-                            )
-                        )}
-                        </Item>
-                    </ItemContainer>
-                    <OverView>{result.overview}</OverView>
-                </Data>
-                
-            </Content>
-        </Container>
-    )
+    <>
+        <Helmet><title>Loading | Krakflix</title></Helmet>
+        {loading ? <Loader /> : (
+            error ? (
+                <MessageContainer>
+                    <Message text={error} color='#95afc0' />
+                </MessageContainer>
+            ) : (
+                <Container>
+                    <Helmet><title>{result.original_title ? result.original_title : result.original_name}</title></Helmet>
+                    <Backdrop bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`} />
+                    <Content>
+                        <Cover bgImage={result.poster_path ? `https://image.tmdb.org/t/p/w500${result.poster_path}` : require('Assets/noPosterSmall.png')} />
+                        <Data>
+                            <Title>{result.original_title ? result.original_title : result.original_name}</Title>
+                            <ItemContainer>
+                                <Item>{result.release_date 
+                                    ? result.release_date.substring(0,4)
+                                    : result.first_air_date.substring(0,4)}</Item>
+                                <Divider>·</Divider>
+                                <Item>{result.runtime 
+                                    ? `${result.runtime} min`
+                                    : `${result.episode_run_time[0]} min`}</Item>
+                                <Divider>·</Divider>
+                                <Item>{result.genres && (
+                                    result.genres.map((genre, index) => 
+                                        index === result.genres.length - 1 
+                                            ? genre.name 
+                                            : `${genre.name} / `
+                                    )
+                                )}
+                                </Item>
+                            </ItemContainer>
+                            <OverView>{result.overview}</OverView>
+                        </Data>
+                    </Content>
+                </Container>
+            )
+        )}
+    </>
 );
 
 DetailPresenter.propTypes = {
