@@ -1,0 +1,91 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import Helmet from 'react-helmet';
+import Section from 'Components/Section';
+import Loader from 'Components/Loader';
+import Message from 'Components/Message';
+import Poster from 'Components/Poster';
+
+interface IHomePresenter {
+  nowPlaying: Array<any>;
+  upcoming: Array<any>;
+  popular: Array<any>;
+  error: string | null;
+  loading: boolean;
+}
+
+const Container = styled.div`
+    padding: 20px;
+`;
+
+// eslint-disable-next-line max-len
+const HomePresenter: React.FC<IHomePresenter> = ({ nowPlaying, upcoming, popular, error, loading }) => (
+    <>
+      <Helmet>
+          <title>Movies | Krakflix</title>
+      </Helmet>
+      {loading ? <Loader /> : (
+          <Container>
+
+              {nowPlaying && nowPlaying.length > 0 && (
+                  <Section title='Now Playing'>
+                      {nowPlaying.map(movie => (
+                          <Poster
+                              key={movie.id}
+                              id={movie.id}
+                              title={movie.original_title}
+                              imageUrl={movie.poster_path}
+                              rating={movie.vote_average}
+                              year={movie.release_date && movie.release_date.slice(0, 4)}
+                              isMovie={true}
+                          />
+                      ))}
+
+                  </Section>
+              )}
+              {upcoming && upcoming.length > 0 && (
+                  <Section title='Upcoming'>
+                      {upcoming.map(movie => (
+                          <Poster
+                              key={movie.id}
+                              id={movie.id}
+                              title={movie.original_title}
+                              imageUrl={movie.poster_path}
+                              rating={movie.vote_average}
+                              year={movie.release_date && movie.release_date.slice(0, 4)}
+                              isMovie={true}
+                          />
+                      ))}
+                  </Section>
+              )}
+              {popular && popular.length > 0 && (
+                  <Section title='Popular'>
+                      {popular.map(movie => (
+                          <Poster
+                              key={movie.id}
+                              id={movie.id}
+                              title={movie.original_title}
+                              imageUrl={movie.poster_path}
+                              rating={movie.vote_average}
+                              year={movie.release_date && movie.release_date.slice(0, 4)}
+                              isMovie={true}
+                          />
+                      ))}
+                  </Section>
+              )}
+              {error && <Message text={error} color='#EA2027' />}
+          </Container>
+      )}
+    </>
+);
+
+HomePresenter.propTypes = {
+  nowPlaying: PropTypes.array.isRequired,
+  upcoming: PropTypes.array.isRequired,
+  popular: PropTypes.array.isRequired,
+  error: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
+};
+
+export default HomePresenter;

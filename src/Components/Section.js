@@ -1,5 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -20,7 +20,6 @@ const Grid = styled.div`
     grid-gap: 25px;
 `;
 
-
 const Section = ({ title, children }) => (
     <Container>
         <Title>{title}</Title>
@@ -29,11 +28,11 @@ const Section = ({ title, children }) => (
 );
 
 Section.propTypes = {
-    title: PropTypes.string.isRequired,
-    children: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.node),
-        PropTypes.node
-    ]).isRequired
-}
+  title: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+};
 
 export default Section;

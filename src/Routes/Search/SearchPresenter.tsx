@@ -7,6 +7,16 @@ import Section from 'Components/Section';
 import Message from 'Components/Message';
 import Poster from 'Components/Poster';
 
+interface ISearchPresenter {
+  movieResults: Array<any>;
+  tvResults: Array<any>;
+  searchTerm: string;
+  error: string | null;
+  loading: boolean;
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  updateTerm: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
 const Container = styled.div`
     padding: 20px;
 `;
@@ -21,14 +31,14 @@ const Input = styled.input`
     width: 100%;
 `;
 
-const SearchPresenter = ({ 
-    movieResults,
-    tvResults,
-    searchTerm, 
-    error,
-    loading,
-    handleSubmit,
-    updateTerm
+const SearchPresenter: React.FC<ISearchPresenter> = ({
+  movieResults,
+  tvResults,
+  searchTerm,
+  error,
+  loading,
+  handleSubmit,
+  updateTerm,
 }) => (
     <Container>
         <Helmet><title>Search | Krakflix</title></Helmet>
@@ -43,10 +53,10 @@ const SearchPresenter = ({
                             <Poster
                                 key={movie.id}
                                 id={movie.id}
-                                title={movie.original_title} 
-                                imageUrl={movie.poster_path} 
+                                title={movie.original_title}
+                                imageUrl={movie.poster_path}
                                 rating={movie.vote_average}
-                                year={movie.release_date && movie.release_date.slice(0,4)}
+                                year={movie.release_date && movie.release_date.slice(0, 4)}
                                 isMovie={true}
                             />
                         ))}
@@ -55,35 +65,39 @@ const SearchPresenter = ({
                 {tvResults && tvResults.length > 0 && (
                     <Section title='Tv Results'>
                         {tvResults.map(show => (
-                            <Poster 
+                            <Poster
                                 key={show.id}
                                 id={show.id}
-                                title={show.original_name} 
-                                imageUrl={show.poster_path} 
+                                title={show.original_name}
+                                imageUrl={show.poster_path}
                                 rating={show.vote_average}
-                                year={show.first_air_date && show.first_air_date.slice(0,4)}
+                                year={show.first_air_date && show.first_air_date.slice(0, 4)}
                                 isMovie={false}
                             />
                         ))}
                     </Section>
                 )}
                 {error && <Message text={error} color='#EA2027' />}
-                {movieResults && tvResults && movieResults.length === 0 && tvResults.length === 0 && (
+                {movieResults
+                && tvResults
+                && movieResults.length === 0
+                && tvResults.length === 0
+                && (
                     <Message text={`Noting Found for '${searchTerm}'`} color={'#95afc0'} />
                 )}
             </>
         )}
     </Container>
-)
+);
 
 SearchPresenter.propTypes = {
-    movieResults: PropTypes.array,
-    tvResults: PropTypes.array,
-    searchTerm: PropTypes.string,
-    error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    updateTerm: PropTypes.func.isRequired
-}
+  movieResults: PropTypes.array.isRequired,
+  tvResults: PropTypes.array.isRequired,
+  searchTerm: PropTypes.string.isRequired,
+  error: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  updateTerm: PropTypes.func.isRequired,
+};
 
 export default SearchPresenter;

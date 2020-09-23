@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -9,4 +9,12 @@ const Container = styled.div`
     font-size: 21px;
 `;
 
-export default () => <Container><span role='img' aria-label='Loading'>⏰</span></Container>;
+const Loader: React.FC = () => (
+  <Container>
+    <span role='img' aria-label='Loading'>
+      ⏰
+    </span>
+  </Container>
+);
+
+export default Loader;
